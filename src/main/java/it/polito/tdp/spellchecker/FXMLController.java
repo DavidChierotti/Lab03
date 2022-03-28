@@ -1,3 +1,5 @@
+
+
 package it.polito.tdp.spellchecker;
 
 import java.net.URL;
@@ -42,13 +44,7 @@ public class FXMLController {
 
     @FXML
     void doSpellCheck(ActionEvent event) {
-         String s=txtUser.getText();
-         
-    }
-    
-    
-    public void setModel(Dictionary model) {
-    	this.model=model;
+
     }
 
     @FXML
@@ -60,7 +56,10 @@ public class FXMLController {
         assert txtUser != null : "fx:id=\"txtUser\" was not injected: check your FXML file 'Scene.fxml'.";
 
     }
+
+    public void setModel(Dictionary dizionario) {
+    	this.model=dizionario;
+    }
     
-
-
+    
 }
