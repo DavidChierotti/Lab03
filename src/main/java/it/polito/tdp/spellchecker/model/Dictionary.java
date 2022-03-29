@@ -30,16 +30,36 @@ public class Dictionary {
 
 	public void loadDictionary(String language) {
 		try {
-			FileReader fr = new FileReader(language+".txt");
-			BufferedReader br = new BufferedReader(fr);
+			
+			FileReader fri = new FileReader("src/main/resources/Italian.txt");
+			BufferedReader bri = new BufferedReader(fri);
+
+			FileReader fre = new FileReader("src/main/resources/English.txt");
+		    BufferedReader bre = new BufferedReader(fre);
+		    
+		    
+			
 			String word;
-			while ((word = br.readLine()) != null) {
+			if(language.compareTo("Italian")==0) {
+			while ((word = bri.readLine()) != null) {
 			listaDizionario.add(word);
 			mappaDizionario.put(word, word);
 			}
-			br.close();
-			 } catch (IOException e){
+			
+			bri.close();
+			}
+			else {
+				while ((word = bre.readLine()) != null) {
+					listaDizionario.add(word);
+					mappaDizionario.put(word, word);
+					}
+					
+					bre.close();
+					}
+			}
+			  catch (IOException e){
 			System.out.println("Errore nella lettura del file");
+			e.printStackTrace();
 			}
 		
 		
@@ -69,13 +89,56 @@ public class Dictionary {
 		LinkedList<RichWord> ritorno=new LinkedList<RichWord>();
 		for(String s:inputTextList) {
 			RichWord word=new RichWord(s,false);
-			if(mappaDizionario.containsKey(s))
+			if(listaDizionario.contains(s))
 				word.setGiusta(true);
 			ritorno.add(word);
 		}
 		
 		
 		return ritorno;
+		
+	}
+	
+	public List<RichWord> spellCheckTextLinear(List<String> inputTextList){
+		LinkedList<RichWord> ritorno=new LinkedList<RichWord>();
+		for(String s:inputTextList) {
+			RichWord word=new RichWord(s,false);
+			for(int i =0;i<listaDizionario.size();i++){
+				if(listaDizionario.get(i).compareTo(s)==0)
+					word.setGiusta(true);
+			}
+
+		}
+		
+		
+		return ritorno;
+		
+	}
+	
+	
+	public List<RichWord> spellCheckTextDicotomic(List<String> inputTextList){
+		LinkedList<RichWord> ritorno=new LinkedList<RichWord>();
+		for(String s:inputTextList) {
+			RichWord word=new RichWord(s,false);
+			for(int i =0;i<listaDizionario.size();i++){
+				if(listaDizionario.get(i).compareTo(s)==0)
+					word.setGiusta(true);
+			}
+
+		}
+		
+		
+		return ritorno;
+		
+	}
+	
+	public String stampa(LinkedList<RichWord> lista) {
+		String s=new String();
+		for(RichWord r: lista) {
+			if(r.isGiusta()==false)
+				s=s+r.getParola()+"\n";
+		}
+		return s;
 		
 	}
 	
